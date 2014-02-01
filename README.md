@@ -1,13 +1,13 @@
 quickey.py
 ==========
 
-# Quick + key = Quickey!!
+# Mouse click? Alt + Tab? No, Quickey!!
 Linux上で予め設定しておいたウィンドウを、キーボードショートカット一発でアクティブ化する為のPythonスクリプトです。
 アクティブ化する対象となるウィンドウが起動していない場合は、指定したコマンドを実行(例えばそのウィンドウを新たに起動したりも)できます。
 任意のショートカットキーによる高速なタスク切り替え機能にランチャーがくっついたようなもんだと思ってください。
 
 キーのバインド、及び対象ウィンドウ、コマンドの設定は、
-Autokey(https://code.google.com/p/autokey/)を利用して行います。
+Autokey( https://code.google.com/p/autokey/ )を利用して行います。
 WinでいうところのAutoHotKeyのようなものです。
 
 キーバインドはGUIベースで簡単に行えます。
@@ -21,15 +21,15 @@ WinでいうところのAutoHotKeyのようなものです。
 ## 事前準備
 
 本スクリプトの動作には、Python, Autokey, wmctrlが必要です。
-それぞれ以下のようにインストールしてください。
+それぞれ以下のようにインストールしてください(Ubuntu、その他Debian系Distributionについて書いています)。
 
-- Autokey(Ubuntu、その他Debian系Distribution)
+- Autokey
 
-    $ sudo apt-get install autokey-gtk
-    
+        $ sudo apt-get install autokey-gtk
+
 - wmctrl
 
-    $ sudo apt-get install autokey-gtk
+        $ sudo apt-get install autokey-gtk
 
 AutokeyはPythonで動作している為、基本的には自動で入ると思います。
 
@@ -60,5 +60,6 @@ Pythonから直接叩く事で、Autokeyを利用せずとも動作させるこ�
 # 最後に
 
 バグ、要望、その他ご意見等御座いましたら下記よりお問い合わせください。
-Blog: http://m-yamashita.github.io/
-Mail: mxyamashita at gmail.com
+
+- Blog: http://m-yamashita.github.io/
+- Mail: mxyamashita at gmail.com
