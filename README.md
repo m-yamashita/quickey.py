@@ -25,7 +25,12 @@ WinでいうところのAutoHotKeyのようなものです。
 
 - Autokey
 
-        $ sudo apt-get install autokey-gtk
+Google Codeより最新のAutokeyを入手し(apt-getのバージョンではうまく動きません)、インストールします。
+
+        $ wget https://autokey.googlecode.com/files/autokey-0.90.4.tar.gz
+        $ tar zxvf autokey-0.90.4.tar.gz
+        $ cd autokey-0.90.4
+        $ sudo python setup.py install
 
 - wmctrl
 
@@ -49,10 +54,12 @@ Autokeyの次回起動時に自動で読み込まれるようになっていま�
 ## Autokeyへの登録
 
 インストールするとAutokeyのメニューにQuickeyフォルダが新しくできていますので、
-その中のサンプルを適当にコピーして各種設定してください。
+その中のサンプルを適当にコピーして各種設定してください(初回起動では作成されないようなので、うまくいかなかった場合は一旦autokeyを終了した後、再度起動してみてください)。
 
 画像1枚でわかるquickey.py(というかAutokey？)の使い方。
 ![quickey.pyの使い方](./quickey-usage01.png)
+
+あとは上記のスクリプトをコピーして新しい設定を増やしていけば良いです。
 
 ## 実はコマンドラインでも動きます(Autokeyを利用しない場合。インストール不要)
 
