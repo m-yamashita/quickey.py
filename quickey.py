@@ -11,7 +11,7 @@ def go(target_string, path):
         title = exec_command("wmctrl -l | awk '/%s/ {for(i=4;i<NF;++i){printf(\"%%s \",$i)}print $NF}'" % target_string)
         exec_command("wmctrl -a \"%s\"" % title)
     else:
-        subprocess.Popen([path])
+        exec_command(path)
 
 # Execute system command by argument.
 def exec_command(command):
