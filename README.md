@@ -2,19 +2,21 @@ quickey.py
 ==========
 
 # Mouse click? Alt + Tab? No, Quickey!!
-Linux上で予め設定しておいたウィンドウを、キーボードショートカット一発でアクティブ化する為のPythonスクリプトです。
+Linux上で、予め検索条件を指定しておき、実行時に検索にHitしたウィンドウを、キーボードショートカット一発でアクティブ化する為のPythonスクリプトです。
 アクティブ化する対象となるウィンドウが起動していない場合は、指定したコマンドを実行(例えばそのウィンドウを新たに起動したりも)できます。
 任意のショートカットキーによる高速なタスク切り替え機能にランチャーがくっついたようなもんだと思ってください。
+応用すれば、単なるショートカットランチャーとしても利用できます。
 
 キーのバインド、及び対象ウィンドウ、コマンドの設定は、
 Autokey( https://code.google.com/p/autokey/ )を利用して行います。
 WinでいうところのAutoHotKeyのようなものです。
+また、xbindkeysによる指定等も今後サポートする予定です。
 
-キーバインドはGUIベースで簡単に行えます。
-対象ウィンドウの指定及びコマンドの設定は、
+Autokeyを利用すれば、キーバインドはGUIベースで簡単に行えます。
+対象ウィンドウの検索条件指定及びコマンドの設定は、
 インストール時にAutokeyに登録されるサンプルスクリプトをコピーして設定値を2行書き換えるだけの簡単仕様です。
 同じようにコピーしてわずかな修正を加えるだけで、あらゆるウィンドウに対応できると思います。
-また、ウィンドウの指定部分では正規表現が利用できます。
+また、ウィンドウの検索条件には正規表現が利用できます。
 
 # Install(Autokeyを利用する場合)
 
@@ -25,7 +27,7 @@ WinでいうところのAutoHotKeyのようなものです。
 
 - Autokey
 
-Google Codeより最新のAutokeyを入手し(apt-getのバージョンではうまく動きません)、インストールします。
+Google CodeよりAutokey(v0.90.4)を入手し(apt-getのバージョンではうまく動きません)、インストールします。
 
         $ wget https://autokey.googlecode.com/files/autokey-0.90.4.tar.gz
         $ tar zxvf autokey-0.90.4.tar.gz
@@ -34,7 +36,7 @@ Google Codeより最新のAutokeyを入手し(apt-getのバージョンではう
 
 - wmctrl
 
-        $ sudo apt-get install autokey-gtk
+        $ sudo apt-get install wmctrl
 
 AutokeyはPythonで動作している為、基本的には自動で入ると思います。
 
@@ -42,7 +44,7 @@ AutokeyはPythonで動作している為、基本的には自動で入ると思�
 
 基本的にはinstall.shを叩くだけです。
 install.shを実行する事により ~/.config/autokey 配下にquickey.pyがコピーされます。
-また、サンプルスクリプトも ~/.config/autokey/data 配下にコピーされるので、
+また、サンプルスクリプトも ~/.config/autokey/data/Quickey 配下にコピーされるので、
 Autokeyの次回起動時に自動で読み込まれるようになっています。
 
 このサンプルスクリプトは、quickey.pyが上記箇所にインストールされていることを前提として動作する為、
@@ -56,10 +58,19 @@ Autokeyの次回起動時に自動で読み込まれるようになっていま�
 インストールするとAutokeyのメニューにQuickeyフォルダが新しくできていますので、
 その中のサンプルを適当にコピーして各種設定してください(初回起動では作成されないようなので、うまくいかなかった場合は一旦autokeyを終了した後、再度起動してみてください)。
 
-画像1枚でわかるquickey.py(というかAutokey？)の使い方。
+画像1枚でわかるquickey.py(というかAutokey)の使い方。
 ![quickey.pyの使い方](./quickey-usage01.png)
 
-あとは上記のスクリプトをコピーして新しい設定を増やしていけば良いです。
+### Optionについて
+
+標準で以下のオプションに対応しており、それぞれoptionsに設定して利用することが可能です。
+
+- -c ... 検索条件を、ウィンドウタイトルではなく <code>wmctrl -lx</code> を実行する等して得られる WM_CLASS 名に変更することができます。
+常にタイトルが不定なNautilus等のファイラ類を指定したい際に役に立ちます。
+- -a ... 検索条件にHitしたウィンドウを、プロセスを起動した順に全てアクティブ化します。つまり、起動したプロセスの新しいものが最終的にアクティブになります。
+これを利用することで、ある程度のグループに対して一斉にウィンドウを前面に持ってくることができます。
+- -r ... ウィンドウをアクティブ化する順番を逆にします。-aオプションが指定されていた場合は新しいプロセスから順に、最終的には最も古いプロセスがアクティブになりますし、
+-aオプションを指定していなかった場合は、最も古いプロセスのみ前面に来るようにできます。
 
 ## 実はコマンドラインでも動きます(Autokeyを利用しない場合。インストール不要)
 
@@ -68,11 +79,11 @@ Pythonから直接叩く事で、Autokeyを利用せずとも動作させるこ�
 お使いのDesktop環境に応じて、キーボードショートカットとしてコマンドを登録させればすぐに使うことができます。
 コマンドラインにてご利用の際には、以下のようなコマンドで実行してください。
 
-    $ python path/to/dir/quickey.py/quickey.py "Your regexp of window title" "Your command"
+    $ python path/to/dir/quickey.py/quickey.py [options(-a, -c, -r)] "Your regexp of window title" "Your command"
 
-以下はGoogle Chromeのウィンドウをアクティブ化、存在しなければGoogle Chromeを起動するコマンドの例です。
+以下はGoogle Chromeのウィンドウを全てアクティブ化、存在しなければGoogle Chromeを起動するコマンドの例です。
 
-    $ python path/to/dir/quickey.py/quickey.py " - Google Chrome$" "google-chrome"
+    $ python path/to/dir/quickey.py/quickey.py -a " - Google Chrome$" "google-chrome"
 
 # 最後に
 
