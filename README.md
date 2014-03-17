@@ -29,14 +29,18 @@ Autokeyを利用すれば、キーバインドはGUIベースで簡単に行え�
 
 Google CodeよりAutokey(v0.90.4)を入手し(apt-getのバージョンではうまく動きません)、インストールします。
 
-        $ wget https://autokey.googlecode.com/files/autokey-0.90.4.tar.gz
-        $ tar zxvf autokey-0.90.4.tar.gz
-        $ cd autokey-0.90.4
-        $ sudo python setup.py install
+        wget https://autokey.googlecode.com/files/autokey-0.90.4.tar.gz
+        tar zxvf autokey-0.90.4.tar.gz
+        cd autokey-0.90.4
+        sudo python setup.py install
 
 - wmctrl
 
-        $ sudo apt-get install wmctrl
+        sudo apt-get install wmctrl
+
+- python-xlib
+
+        sudo apt-get install python-xlib
 
 AutokeyはPythonで動作している為、基本的には自動で入ると思います。
 
@@ -52,6 +56,15 @@ Autokeyの次回起動時に自動で読み込まれるようになっていま�
 各サンプル及び作成済みのスクリプトの最終行で実行している quickey.py のパスを変更してください。
 
 # 使い方
+
+## Autokeyの起動
+
+まずは以下のコマンドもしくはUbuntuのダッシュボード等から、Autokeyを起動します。
+
+    autokey-gtk
+
+Autokeyはコマンドラインから起動するとCtrl+C等による終了が効かず kill するしかなくなってしまう為、
+通常はダッシュボードや、Windowsでいうところのスタートメニュー等から起動するのが良いかと思われます。
 
 ## Autokeyへの登録
 
